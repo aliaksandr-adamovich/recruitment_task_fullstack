@@ -1,16 +1,10 @@
-// ./assets/js/components/Users.js
-
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
 class SetupCheck extends Component {
     constructor() {
         super();
-        this.state = { setupCheck: {}, loading: true};
-    }
-
-    getBaseUrl() {
-        return 'http://telemedi-zadanie.localhost';
+        this.state = { setupCheck: {}, loading: true };
     }
 
     componentDidMount() {
@@ -18,15 +12,15 @@ class SetupCheck extends Component {
     }
 
     checkApiSetup() {
-        //const baseUrl = this.getBaseUrl();
-        const baseUrl = 'http://telemedi-zadanie.localhost';
-        axios.get(baseUrl + `/api/setup-check?testParam=1`).then(response => {
-            let responseIsOK = response.data && response.data.testParam === 1
-            this.setState({ setupCheck: responseIsOK, loading: false})
-        }).catch(function (error) {
-            console.error(error);
-            this.setState({ setupCheck: false, loading: false});
-        });
+        axios.get(`/api/setup-check?testParam=1`)
+            .then(response => {
+                const responseIsOK = response.data && response.data.testParam === 1;
+                this.setState({ setupCheck: responseIsOK, loading: false });
+            })
+            .catch((error) => {
+                console.error(error);
+                this.setState({ setupCheck: false, loading: false });
+            });
     }
 
     render() {
@@ -38,7 +32,6 @@ class SetupCheck extends Component {
                         <div className="row mt-5">
                             <div className="col-md-8 offset-md-2">
                                 <h2 className="text-center"><span>This is a test</span> @ Telemedi</h2>
-
                                 {loading ? (
                                     <div className={'text-center'}>
                                         <span className="fa fa-spin fa-spinner fa-4x"></span>
@@ -57,7 +50,8 @@ class SetupCheck extends Component {
                     </div>
                 </section>
             </div>
-        )
+        );
     }
 }
+
 export default SetupCheck;
